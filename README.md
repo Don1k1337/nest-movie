@@ -12,9 +12,9 @@ Technologies that was used:
 To set up this project locally, make sure you have the following installed:
 
 - Node.js (v18)
-- PostgreSQL (v15)
-- Prisma (v4.15.0)
+- Docker (v24.0.2)
 
+Please make sure you have Node.js and Docker installed before proceeding with the project setup.
 ## Installation
 
 ```bash
@@ -54,7 +54,7 @@ Development database: `localhost:5434`
 
 Test database: `localhost:5435`
 
-You can now connect to the databases using a PostgreSQL client or use them in your application by configuring the connection details accordingly.
+You can now connect to the databases using a Prisma client, PostgreSQL client or use them in your application by configuring the connection details accordingly.
 
 _Note: Make sure you have Docker installed and running on your local machine before running the Docker Compose command._
 
@@ -93,4 +93,27 @@ $ yarn run start:dev
 
 # production mode
 $ yarn run start:prod
+```
+
+## Running the tests
+Test cases using the mock test environment from the Docker Compose file. To correctly run the test cases, you should follow these instructions:
+
+1. Create a new file named .env.test in the same directory as the Docker Compose file.
+2. Open the .env.test file and add the following environment variables with their respective values:
+```dotenv
+DATABASE_URL="postgresql://postgres:mypassword@localhost:5435/mydatabase?schema=public"
+POSTGRES_USER="myusername"
+POSTGRES_PASSWORD="mypassword"
+POSTGRES_DB="mydatabase"
+JWT_SECRET="mysecret"
+```
+Replace `myusername`, `mypassword`, `mydatabase`, and `mysecret` with your desired values.
+
+_Note: The port of the testing database is different from the one specified in the .env file, so please set up the connection string of `DATABASE_URL` correctly according to the Docker Compose `test-db` environment._
+
+1. Save and close the `.env.test` file.
+2. Open your terminal or command prompt.
+3. Run the following command to execute the test environment and run the test cases:
+```bash
+$ yarn test:e2e
 ```
