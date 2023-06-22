@@ -52,8 +52,7 @@ describe('App module e2e', () => {
           .withBody({
             password: dto.password,
           })
-          .expectStatus(400)
-          .inspect();
+          .expectStatus(400);
       });
 
       it('should throw an exception if password field is empty', () => {
@@ -63,8 +62,7 @@ describe('App module e2e', () => {
           .withBody({
             email: dto.email,
           })
-          .expectStatus(400)
-          .inspect();
+          .expectStatus(400);
       });
 
       it('should throw an exception if body is empty', () => {
@@ -77,8 +75,7 @@ describe('App module e2e', () => {
           .spec()
           .post('/auth/signup')
           .withBody(dto)
-          .expectStatus(201)
-          .inspect();
+          .expectStatus(201);
       });
     });
 
@@ -91,8 +88,7 @@ describe('App module e2e', () => {
           .withBody({
             password: dto.password,
           })
-          .expectStatus(400)
-          .inspect();
+          .expectStatus(400);
       });
 
       it('should throw an exception if password field is empty', () => {
@@ -102,8 +98,7 @@ describe('App module e2e', () => {
           .withBody({
             email: dto.email,
           })
-          .expectStatus(400)
-          .inspect();
+          .expectStatus(400);
       });
 
       it('should throw an exception if body is empty', () => {
@@ -116,21 +111,29 @@ describe('App module e2e', () => {
           .post('/auth/signin')
           .withBody(dto)
           .expectStatus(200)
-          .inspect();
+          .stores('userAccessToken', 'access_token');
       });
     });
   });
 
   // User testing module
-  // describe('User', () => {
-  //   describe('Should get the current user', () => {
-  //
-  //   })
-  //
-  //   describe('Should edit the current user', () => {
-  //
-  //   })
-  // });
+  describe('User', () => {
+    describe('Should get the current user', () => {
+      it('should get the user', () => {
+        return pactum
+          .spec()
+          .get('/users/current')
+          .expectStatus(200)
+          .withHeaders({
+            Authorization: `Bearer $S{userAccessToken}`,
+          });
+      });
+    });
+
+    // describe('Should edit the current user', () => {
+    //
+    // })
+  });
   //
   // Movie testing module
   // describe('Movie', () => {

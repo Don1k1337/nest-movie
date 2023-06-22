@@ -98,8 +98,8 @@ $ yarn run start:prod
 ## Running the tests
 Test cases using the mock test environment from the Docker Compose file. To correctly run the test cases, you should follow these instructions:
 
-1. Create a new file named .env.test in the same directory as the Docker Compose file.
-2. Open the .env.test file and add the following environment variables with their respective values:
+1. Create a new file named `.env.test` in the same directory as the Docker Compose file.
+2. Open the `.env.test` file and add the following environment variables with their respective values:
 ```dotenv
 DATABASE_URL="postgresql://postgres:mypassword@localhost:5435/mydatabase?schema=public"
 POSTGRES_USER="myusername"
