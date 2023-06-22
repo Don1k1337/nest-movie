@@ -30,9 +30,9 @@ To correctly set up and run the database locally using this Docker Compose file,
 
 ```dotenv
 DATABASE_URL="postgresql://postgres:mypassword@localhost:5434/mydatabase?schema=public"
-POSTGRES_USER=myusername
-POSTGRES_PASSWORD=mypassword
-POSTGRES_DB=mydatabase
+POSTGRES_USER="myusername"
+POSTGRES_PASSWORD="mypassword"
+POSTGRES_DB="mydatabase"
 JWT_SECRET="mysecret"
 ```
 
