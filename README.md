@@ -109,7 +109,7 @@ JWT_SECRET="mysecret"
 ```
 Replace `myusername`, `mypassword`, `mydatabase`, and `mysecret` with your desired values.
 
-_Note: The port of the testing database is different from the one specified in the .env file, so please set up the connection string of `DATABASE_URL` correctly according to the Docker Compose `test-db` environment._
+_Note: The port of the testing database is different from the one specified in the `.env` file, so please set up the connection string of `DATABASE_URL` correctly according to the Docker Compose `test-db` environment._
 
 1. Save and close the `.env.test` file.
 2. Open your terminal or command prompt.
