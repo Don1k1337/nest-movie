@@ -1,9 +1,10 @@
+import * as pactum from 'pactum';
 import { Test } from '@nestjs/testing';
 import { AppModule } from '../src/app.module';
 import { AuthDto } from '../src/auth/dto';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { PrismaService } from '../src/prisma/prisma.service';
-import * as pactum from 'pactum';
+import { EditUserDto } from '../src/user/dto';
 
 describe('App module e2e', () => {
   let app: INestApplication;
@@ -130,9 +131,24 @@ describe('App module e2e', () => {
       });
     });
 
-    // describe('Should edit the current user', () => {
-    //
-    // })
+    describe('Should edit the current user', () => {
+      it('should edit the user', () => {
+        const dto: EditUserDto = {
+          firstName: 'Tester',
+          email: 'tester@test.com',
+        };
+        return pactum
+          .spec()
+          .patch('/users')
+          .withHeaders({
+            Authorization: `Bearer $S{userAccessToken}`,
+          })
+          .expectStatus(200)
+          .withBody(dto)
+          .expectBodyContains(dto.firstName)
+          .expectBodyContains(dto.email);
+      });
+    });
   });
   //
   // Movie testing module
