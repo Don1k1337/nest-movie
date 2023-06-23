@@ -4,7 +4,6 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { MovieModule } from './movie/movie.module';
 import { PrismaModule } from './prisma/prisma.module';
-import { ServiceController } from './service/service.controller';
 
 @Module({
   imports: [
@@ -16,6 +15,5 @@ import { ServiceController } from './service/service.controller';
     MovieModule,
     PrismaModule,
   ],
-  controllers: [ServiceController],
 })
 export class AppModule {}
