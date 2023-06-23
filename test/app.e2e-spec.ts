@@ -5,6 +5,7 @@ import { AuthDto } from '../src/auth/dto';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { PrismaService } from '../src/prisma/prisma.service';
 import { EditUserDto } from '../src/user/dto';
+import { CreateMovieDto, EditMovieDto } from '../src/movie/dto';
 
 describe('App module e2e', () => {
   let app: INestApplication;
@@ -150,27 +151,107 @@ describe('App module e2e', () => {
       });
     });
   });
-  //
-  // Movie testing module
-  // describe('Movie', () => {
-  //   describe('Should create a new movie', () => {
-  //
-  //   })
-  //
-  //   describe('Should get the list of movies', () => {
-  //
-  //   })
-  //
-  //   describe('Should get the movie by id', () => {
-  //
-  //   })
-  //
-  //   describe('Should update the movie by id', () => {
-  //
-  //   })
-  //
-  //   describe('Should delete the current movie by id', () => {
-  //
-  //   })
-  // });
+  describe('Movies', () => {
+    describe('Get empty movies', () => {
+      it('should get movies', () => {
+        return pactum
+          .spec()
+          .get('/movies')
+          .withHeaders({
+            Authorization: `Bearer $S{userAccessToken}`,
+          })
+          .expectStatus(200)
+          .expectBody([]);
+      });
+    });
+    describe('Should add movie', () => {
+      const dto: CreateMovieDto = {
+        title: 'First Movie',
+        description: 'First movie description',
+      };
+      it('should add new movie', () => {
+        return pactum
+          .spec()
+          .post('/movies')
+          .withHeaders({
+            Authorization: `Bearer $S{userAccessToken}`,
+          })
+          .withBody(dto)
+          .expectStatus(201)
+          .stores('movieId', 'id');
+      });
+    });
+
+    describe('Get movies', () => {
+      it('should get the movies', () => {
+        return pactum
+          .spec()
+          .get('/movies')
+          .withHeaders({
+            Authorization: `Bearer $S{userAccessToken}`,
+          })
+          .expectStatus(200)
+          .expectJsonLength(1);
+      });
+    });
+
+    describe('Get movie by id', () => {
+      it('should get the movie by id', () => {
+        return pactum
+          .spec()
+          .get('/movies')
+          .withPathParams('id', `$S{movieId}`)
+          .withHeaders({
+            Authorization: `Bearer $S{userAccessToken}`,
+          })
+          .expectStatus(200)
+          .expectBodyContains(`$S{movieId}`);
+      });
+    });
+
+    describe('Edit movie by id', () => {
+      const dto: EditMovieDto = {
+        title: 'Inception',
+        description: `A skilled thief is given a final mission to implant an idea into a target's subconscious.`,
+      };
+      it('should edit the movie by id', () => {
+        return pactum
+          .spec()
+          .patch(`/movies/{id}`)
+          .withPathParams('id', `$S{movieId}`)
+          .withHeaders({
+            Authorization: `Bearer $S{userAccessToken}`,
+          })
+          .withBody(dto)
+          .expectStatus(200)
+          .expectBodyContains(dto.title)
+          .expectBodyContains(dto.description);
+      });
+    });
+  });
+
+  describe('Delete movie by id', () => {
+    it('should delete the movie by id', () => {
+      return pactum
+        .spec()
+        .delete(`/movies/{id}`)
+        .withPathParams('id', `$S{movieId}`)
+        .withHeaders({
+          Authorization: `Bearer $S{userAccessToken}`,
+        })
+        .expectStatus(204);
+    });
+
+    it('should return empty movie', () => {
+      return pactum
+        .spec()
+        .get(`/movies`)
+        .withPathParams('id', `$S{movieId}`)
+        .withHeaders({
+          Authorization: `Bearer $S{userAccessToken}`,
+        })
+        .expectStatus(200)
+        .expectJsonLength(0);
+    });
+  });
 });
