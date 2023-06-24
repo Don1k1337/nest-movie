@@ -217,7 +217,7 @@ describe('App module e2e', () => {
       it('should edit the movie by id', () => {
         return pactum
           .spec()
-          .patch(`/movies/{id}`)
+          .put(`/movies/{id}`)
           .withPathParams('id', `$S{movieId}`)
           .withHeaders({
             Authorization: `Bearer $S{userAccessToken}`,

@@ -7,8 +7,8 @@ import {
   HttpStatus,
   Param,
   ParseIntPipe,
-  Patch,
   Post,
+  Put,
   UseGuards,
 } from '@nestjs/common';
 import { GetUser } from '../auth/decorator';
@@ -40,7 +40,7 @@ export class MovieController {
     return this.movieService.createMovie(user.id, dto);
   }
 
-  @Patch(':id')
+  @Put(':id')
   editMovieById(
     @GetUser('id') user: User,
     @Param('id', ParseIntPipe) movieId: number,
