@@ -7,6 +7,29 @@ Technologies that was used:
 - Prisma
 - PostgreSQL
 - Docker
+## ER Schema
+
+This is the schema that defines the structure of the entities in the database. It consists of two models: User and Movie.
+
+### User Model
+- id: Unique identifier for each user (auto-incremented integer).
+- createdAt: Date and time when the user was created (automatically set to the current date and time).
+- updatedAt: Date and time when the user was last updated (automatically updated).
+- email: Unique email address of the user.
+- hash: Hashed value of the user's password.
+- firstName: Optional first name of the user.
+- lastName: Optional last name of the user.
+- movies: List of movies associated with the user.
+
+### Movie Model
+- id: Unique identifier for each movie (auto-incremented integer).
+- title: Title of the movie.
+- description: Description of the movie.
+- userId: Foreign key referencing the associated user.
+- user: Relationship with the User model, indicating the user who created the movie.
+
+![ER Diagram](er-diagram.png)
+
 ## Prerequisites
 
 To set up this project locally, make sure you have the following installed:
