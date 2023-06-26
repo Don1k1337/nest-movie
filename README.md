@@ -11,6 +11,8 @@ Technologies that was used:
 
 This is the schema that defines the structure of the entities in the database. It consists of two models: User and Movie.
 
+![ER Diagram](er_schema.png)
+
 ### User Model
 - id: Unique identifier for each user (auto-incremented integer).
 - createdAt: Date and time when the user was created (automatically set to the current date and time).
@@ -27,8 +29,6 @@ This is the schema that defines the structure of the entities in the database. I
 - description: Description of the movie.
 - userId: Foreign key referencing the associated user.
 - user: Relationship with the User model, indicating the user who created the movie.
-
-![ER Diagram](er-diagram.png)
 
 ## Prerequisites
 
